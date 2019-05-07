@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: item-service #微服务集群的名字，Ribbon负载均衡将会直接访问这个微服务集群名字
+    
+#server:
+#  port: 8001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka #同时注册两台Eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+---
+spring:
+  profiles: item1
+  
+server:
+  port: 8001
+---
+spring:
+  profiles: item2
+
+server:
+  port: 8002
